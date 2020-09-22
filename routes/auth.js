@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
+const jwt  = require('jsonwebtoken');
+const verify = require('./verifyToken');
 const {registerValidation ,loginValidation} = require('../public/javascripts/validate');
 
 
@@ -60,7 +62,7 @@ router.post('/signUp' , async (req , res ) => {
 });
 
 
-router.post('/login' ,async (req ,res) => {
+router.post('/login'  , async (req ,res) => {
     //validate the user data
     const{error} =  loginValidation(req.body);
     // 回傳驗證錯誤訊息
@@ -68,14 +70,21 @@ router.post('/login' ,async (req ,res) => {
 
     // 判斷資料庫是否存在帳號
     const user = await User.findOne({email : req.body.email});
-    if(!emailExist) return res.status(400).send("Password or Email Error!!!");
-
-    console.log("User :" + user);
+    if(!user) return res.status(400).send("Password or Email Error!!!");
 
     //驗證密碼
     const validPass = await bcrypt.compare(req.body.password ,user.password);
     if(!validPass) return res.status(400).send("password error !!");
-    res.send("Login Success!!!")
+
+    // Create and assign token
+    const token = jwt.sign({_id : user._id} , process.env.TOKEN_SECRET);
+   // res.header('auth-token',token).send(token);
+
+    res.cookie('auth-token',token ,{
+        maxAge : 60000 ,
+        httpOnly : true
+    }).redirect('/');
+
 });
 
 
