@@ -1,9 +1,67 @@
-<nav>
+<!--<nav>-->
+<!--    <div>-->
+<!--            <ul>-->
+<!--                <li><a href="/api/auth/signUp">註冊</a>  </li>-->
+<!--                <li><a href="/api/auth/login">登入</a>  </li>-->
+<!--                <li><a href="/cart">購物車</a>  </li>-->
+<!--            </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!-- control + option + L 自動排版 -->
+
+<header>
     <div>
-            <ul>
-                <li><a href="/api/auth/signUp">註冊</a>  </li>
-                <li><a href="/api/auth/login">登入</a>  </li>
-                <li><a href="/cart">購物車</a>  </li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">
+                <img src="https://i.pinimg.com/originals/92/0b/3d/920b3d90f07d4f56b37e2d8768d73422.jpg">
+            </a>
+
+            <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+            <!--                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+            <!--                <span class="navbar-toggler-icon"></span>-->
+            <!--            </button>-->
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto ">
+
+
+                    <li class="nav-item active px-3">
+                        <a class="nav-link" href="/">主頁 </a>
+                    </li>
+
+
+                    <li class="nav-item active px-3">
+                        <a class="nav-link" href="#">購物車</a>
+                    </li>
+
+                </ul>
+
+            <% if(success == false){%>
+                <ul class=" navbar-nav navbar-right  " >
+
+                        <li class="nav-item active px-3 ">
+                            <a class="nav-link " href="/api/auth/signUp">註冊</a>
+                        </li>
+
+                        <li class="nav-item active px-3">
+                            <a class="nav-link" href="/api/auth/login">登入</a>
+                        </li>
+
+
+
+                </ul>
+
+        <% } else {%>
+                <h5 class="mr-5 px-3">歡迎<%= name%>!!!</h5>
+                <ul class="navbar-nav navbar-right  ">
+                    <li class="nav-item active px-3">
+
+                        <a class="nav-link" href="/api/auth/logOut" id="signUp">登出</a>
+                    </li>
+                </ul>
+        <% }%>
+            </div>
+        </nav>
     </div>
-</nav>
+</header>

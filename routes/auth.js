@@ -8,12 +8,33 @@ const {registerValidation ,loginValidation} = require('../public/javascripts/val
 
 
 
-router.get('/signUp' , (req , res)=>{
-    res.render('User/signUp' , { user: new User()});
+router.get('/signUp' , async (req , res)=>{
+
+    // const  token = req.header('auth-token');
+    //     console.log(token)
+    //     if(token!== null ){
+    //         const verified = jwt.verify(token,process.env.TOKEN_SECRET);
+    //         console.log("va"+verified);
+    //         const user = await User.findOne({_id : req.user});
+    //             if( verified !== null && token !==''){
+    //                 res.render('User/signUp' , {
+    //                     user : user ,
+    //                     success: true
+    //                 })
+    //             }
+    //     }
+
+        // else{
+            res.render('User/signUp' , {
+                user: new User() ,
+                success : false
+            });
+        // }
+
 })
 
 router.get('/login' , (req , res)=>{
-    res.render('User/login');
+    res.render('User/login' ,{success : false});
 })
 
 
@@ -77,15 +98,19 @@ router.post('/login'  , async (req ,res) => {
     if(!validPass) return res.status(400).send("password error !!");
 
     // Create and assign token
-    const token = jwt.sign({_id : user._id} , process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id : user._id} , process.env.TOKEN_SECRET);
    // res.header('auth-token',token).send(token);
 
-    res.cookie('auth-token',token ,{
-        maxAge : 60000 ,
+    res.cookie('authToken', token ,{
+        expiresIn: '1 day',
         httpOnly : true
     }).redirect('/');
 
 });
+router.get('/logOut' ,(req , res) =>{
+    res.clearCookie('authToken');
+    res.redirect('/');
+})
 
 
 module.exports = router

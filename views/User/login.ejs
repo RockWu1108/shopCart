@@ -1,7 +1,10 @@
 <%- include('../layout/header.ejs')%>
 
-<div>
-    <form action="/api/auth/login"  method="POST">
+<%- include('../layout/navigation.ejs')%>
+
+<div class=" container col-sm-6 offset-lg-3 mt-5">
+    <h2 class="text-center">Login</h2>
+    <form class="justify-content-center border rounded p-4 mt-5 " action="/api/auth/login"  method="POST">
 
         <%- include('_login_form_field.ejs')%>
 
